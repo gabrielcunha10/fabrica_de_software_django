@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Usuario
 from django import forms
 from .forms import PessoaForm
+import requests
 
 def home(request):
     return render(request, 'home.html')
@@ -38,3 +39,13 @@ def atualizar_pessoa(request, pk):
     else:
         form = PessoaForm(instance=pessoa)
     return render(request, 'create.html', {'pessoa': form})
+
+def consultaCep(request):
+    response = requests.get('https://viacep.com.br/ws/01001000/json/', verify=False)
+    dadosEndereco = response.json()
+    endereco = Usuario.objects.create(
+        nome=dadosEndereco['logradouro'],
+        idade=dadosEndereco['ibge'],
+        email=dadosEndereco['bairro']
+    )
+    return HttpResponse(dadosEndereco['logradouro'])
