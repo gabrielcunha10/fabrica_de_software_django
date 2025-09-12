@@ -13,6 +13,13 @@
         <li>{{ cachorro.idade }}</li>
         <li>{{ cachorro.raca }}</li>
     </ul>
+    <a href="{% url 'atualizarcachorro' cachorro.id %}">Atualizar cachorro</a>
+    <br>
+    <a href="{% url 'deletarcachorro' cachorro.id %}">Deletar cachorro</a>
     {% endfor %}
+    <br><br>
+    <a href="{% url 'criarcachorro' %}">Criar cachorro</a>
+    
+    
 </body>
 </html>
